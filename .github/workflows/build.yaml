@@ -32,3 +32,19 @@ jobs:
         with:
           push: true
           tags: gab2021.azurecr.io/gab2021-web:${{ github.sha }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [docker]
+    steps: 
+      - uses: actions/checkout@v2
+      - name: Configure K8s context
+        uses: azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBECONFIG }}
+      - name: Install Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: v3.4.0
+      - run: helm upgrade gab2021 helm/gab2021-web --set image.tag=${{ github.sha }} --install
