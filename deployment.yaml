@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  demo-deployment
+  namespace: default
+  labels:
+    app:  demo-deployment
+spec:
+  selector:
+    matchLabels:
+      app: demo-deployment
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app:  demo-deployment
+    spec:
+      containers:
+      - name:  web
+        image:  gab2021.azurecr.io/gab2021-web:dea62ebc62f59c4aa15d5d08351501f82061faa8
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort:  80
+          name:  demo-deployment
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-service
+  namespace: default
+spec:
+  selector:
+    app: demo-deployment
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
