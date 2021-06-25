@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name:  web
-        image:  gab2021.azurecr.io/gab2021-web:848dcda26c494ffe335d88791afd575951be970d
+        image:  azureday.azurecr.io/azureday-web:848dcda26c494ffe335d88791afd575951be970d
         resources:
           requests:
             cpu: 100m
