@@ -47,4 +47,4 @@ jobs:
         uses: azure/setup-helm@v1
         with:
           version: v3.4.0
-      - run: helm upgrade azureday helm/azureday-web --set image.tag=${{ github.sha }} --install
+      - run: helm upgrade azureday helm/ --set image.tag=${{ github.sha }} --install
